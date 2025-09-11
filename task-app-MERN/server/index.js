@@ -7,6 +7,17 @@ import database from './database/index.js';
 database();
 const app = express();
 
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+app.use(cookieParser());
+app.use(express.json());
+
 app.use("/api", (req, res) => {
   res.status(200).json({ message: "Hello Express" });
 });
