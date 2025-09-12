@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import database from './database/index.js';
+import userRouter from './routes/user-routes.js';
 
 
 database();
@@ -17,6 +18,9 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+
+app.use("/api/user", userRouter);
+// app.use("/api/task", taskRouter);
 
 app.use("/api", (req, res) => {
   res.status(200).json({ message: "Hello Express" });
