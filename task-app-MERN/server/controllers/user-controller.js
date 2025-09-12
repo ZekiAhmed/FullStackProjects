@@ -1,7 +1,7 @@
 import Joi from "joi";
-import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import User from "../models/user.js";
 
 //to register an user
 //to login an user

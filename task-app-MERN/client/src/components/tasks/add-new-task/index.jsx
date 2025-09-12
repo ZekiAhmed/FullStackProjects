@@ -19,7 +19,7 @@ function AddNewTask({
         setCurrentEditedId(null);
       }}
       title={currentEditedId ? "Edit Task" : "Post New Task"}
-      btnText={"Add"}
+      btnText={currentEditedId ? "Edit" : "Add"}
       handleSubmit={handleSubmit}
       formData={taskFormData}
     />

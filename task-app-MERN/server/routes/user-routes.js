@@ -1,14 +1,8 @@
 import express from "express";
-import { loginUser, logout, registerUser } from "../controllers/user-controller";
 const userRouter = express.Router();
 
-
-// const {
-//   registerUser,
-//   loginUser,
-//   logout,
-// } = require("../controllers/user-controller");
-const { userAuthVerification } = require("../middleware/auth-middlware");
+import userAuthVerification from "../middleware/auth-middlware.js";
+import { loginUser, logout, registerUser } from "../controllers/user-controller.js";
 
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
