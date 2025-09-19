@@ -1,3 +1,4 @@
+import Image from '../image/image'
 import './leftBar.css'
 
 function LeftBar() {
@@ -5,23 +6,23 @@ function LeftBar() {
     <div className="leftBar">
       <div className="menuIcons">
         <a href="/" className="menuIcon">
-          <img src="/general/logo.png" alt="" className="logo"/>
+          <Image path="/general/logo.png" alt="" className="logo"/>
         </a>
         <a href="/" className="menuIcon">
-          <img src="/general/home.svg" alt="" />
+          <Image path="/general/home.svg" alt="" />
         </a>
         <a href="/create" className="menuIcon">
-          <img src="/general/create.svg" alt="" />
+          <Image path="/general/create.svg" alt="" />
         </a>
         <a href="/" className="menuIcon">
-          <img src="/general/updates.svg" alt="" />
+          <Image path="/general/updates.svg" alt="" />
         </a>
         <a href="/" className="menuIcon">
-          <img src="/general/messages.svg" alt="" />
+          <Image path="/general/messages.svg" alt="" />
         </a>
       </div>
       <a href="/" className="menuIcon">
-        <img src="/general/settings.svg" alt="" />
+        <Image path="/general/settings.svg" alt="" />
       </a>
     </div>
   )
