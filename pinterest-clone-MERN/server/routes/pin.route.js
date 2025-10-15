@@ -1,9 +1,9 @@
 import express from "express";
-// import { test } from "../controller/pin.controller.js";
+import { getPins } from "../controller/pin.controller.js";
 
 const router = express.Router();
 
-// router.get("/test", test);
+router.get("/", getPins);
 
 
 export default router;
