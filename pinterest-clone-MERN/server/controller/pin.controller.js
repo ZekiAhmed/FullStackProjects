@@ -10,8 +10,8 @@ import Pin from "../models/pin.model.js";
 export const getPins = async (req, res) => {
   const pageNumber = Number(req.query.cursor) || 0;
   const search = req.query.search;
-  const userId = req.query.userId;
-  const boardId = req.query.boardId;
+  // const userId = req.query.userId;
+  // const boardId = req.query.boardId;
   const LIMIT = 21;
 
   const pins = await Pin.find(
@@ -22,10 +22,10 @@ export const getPins = async (req, res) => {
             { tags: { $in: [search] } },
           ],
         }
-      : userId
-      ? { user: userId }
-      : boardId
-      ? { board: boardId }
+      // : userId
+      // ? { user: userId }
+      // : boardId
+      // ? { board: boardId }
       : {}
   )
     .limit(LIMIT)
@@ -38,4 +38,15 @@ export const getPins = async (req, res) => {
   res
     .status(200)
     .json({ pins, nextCursor: hasNextPage ? pageNumber + 1 : null });
+};
+
+export const getPin = async (req, res) => {
+  const { id } = req.params;
+  const pin = await Pin.findById(id).populate(
+    "user",
+    "username img displayName"
+  );
+
+  console.log(pin);
+  res.status(200).json(pin);
 };

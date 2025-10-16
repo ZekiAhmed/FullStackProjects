@@ -171,13 +171,13 @@ import axios from 'axios'
 //   },
 // ];
 
-const fetchPins = async ({pageParam}) => {
-  const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}`)
+const fetchPins = async ({pageParam, search}) => {
+  const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}&search=${search || ""}`)
   return res.data
 }
 
-function Gallery() {
-  const {data, fetchNextPage, hasNextPage, status} = useInfiniteQuery({ queryKey: ['pins'], queryFn: fetchPins, initialPageParam:0,
+function Gallery({search}) {
+  const {data, fetchNextPage, hasNextPage, status} = useInfiniteQuery({ queryKey: ['pins', search], queryFn: ({pageParam = 0}) => fetchPins({ pageParam, search }), initialPageParam:0,
     getNextPageParam: (lastPage, pages) => {
       return lastPage.nextCursor
     },
