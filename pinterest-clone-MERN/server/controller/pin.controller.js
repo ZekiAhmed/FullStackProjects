@@ -1,5 +1,5 @@
 import Pin from "../models/pin.model.js";
-// import User from "../models/user.model.js";
+import User from "../models/user.model.js";
 // import Like from "../models/like.model.js";
 // import Save from "../models/save.model.js";
 // import Board from "../models/board.model.js";
@@ -47,6 +47,6 @@ export const getPin = async (req, res) => {
     "username img displayName"
   );
 
-  console.log(pin);
+  // console.log(pin);
   res.status(200).json(pin);
 };
