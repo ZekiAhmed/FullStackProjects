@@ -10,8 +10,8 @@ import User from "../models/user.model.js";
 export const getPins = async (req, res) => {
   const pageNumber = Number(req.query.cursor) || 0;
   const search = req.query.search;
-  // const userId = req.query.userId;
-  // const boardId = req.query.boardId;
+  const userId = req.query.userId;
+  const boardId = req.query.boardId;
   const LIMIT = 21;
 
   const pins = await Pin.find(
@@ -22,10 +22,10 @@ export const getPins = async (req, res) => {
             { tags: { $in: [search] } },
           ],
         }
-      // : userId
-      // ? { user: userId }
-      // : boardId
-      // ? { board: boardId }
+      : userId
+      ? { user: userId }
+      : boardId
+      ? { board: boardId }
       : {}
   )
     .limit(LIMIT)

@@ -171,13 +171,13 @@ import axios from 'axios'
 //   },
 // ];
 
-const fetchPins = async ({pageParam, search}) => {
-  const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}&search=${search || ""}`)
+const fetchPins = async ({pageParam, search, userId, boardId}) => {
+  const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}&search=${search || ""}&userId=${userId || ""}&boardId=${boardId || ""}`)
   return res.data
 }
 
-function Gallery({search}) {
-  const {data, fetchNextPage, hasNextPage, status} = useInfiniteQuery({ queryKey: ['pins', search], queryFn: ({pageParam = 0}) => fetchPins({ pageParam, search }), initialPageParam:0,
+function Gallery({search, userId, boardId}) {
+  const {data, fetchNextPage, hasNextPage, status} = useInfiniteQuery({ queryKey: ['pins', search, userId, boardId], queryFn: ({pageParam = 0}) => fetchPins({ pageParam, search, userId, boardId}), initialPageParam:0,
     getNextPageParam: (lastPage, pages) => {
       return lastPage.nextCursor
     },
