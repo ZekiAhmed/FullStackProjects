@@ -16,24 +16,29 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="p-6">
-      <button className="but2" onClick={() => logout()}>
-        Logout
-      </button>
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <div className="flex w-full justify-end p-4">
+        <button className="but2" onClick={() => logout()}>
+          Logout
+        </button>
+      </div>
 
+
+    <div className="mx-auto flex flex-1 flex-col items-center justify-center gap-4 text-gray-600 sm:w-1/2 lg:w-1/3"> 
       <h2 className="text-xl font-bold mt-6 mb-3">Waitlist Emails</h2>
 
       {emails.length === 0 ? (
         <p>No emails found.</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-2 w-full">
           {emails.map((email, i) => (
-            <li key={i} className="border p-2 rounded-md">
+            <li key={i} className="rounded-lg inpt bg-white text-center">
               {email}
             </li>
           ))}
         </ul>
       )}
+    </div>
     </div>
   );
 }

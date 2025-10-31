@@ -16,40 +16,45 @@ export function LoginForm() {
     // show message or navigate manually
     router.push("/dashboard");
   }
-}, [state]);
+
 
   if(state?.warning) {
     toast.success(state.warning.toString())
   }
 
+
+}, [state]);
+
+
+
   return (
-    <form action={loginAction} className="flex max-w-[300px] flex-col gap-2">
-      <div className="flex flex-col gap-2">
-        <input id="email" name="email" placeholder="Email" className="w-full inpt" />
+    <form action={loginAction} className="mx-auto flex flex-1 flex-col items-center justify-center gap-4 text-gray-600 sm:w-1/2 lg:w-1/3">
+      <div className="w-full rounded-lg inpt bg-white">
+        <input id="email" name="email" placeholder="Email" className="" />
       </div>
       {state?.errors?.email && (
         <p className="text-red-500">{state.errors.email}</p>
       )}
 
-      <div className="flex flex-col gap-2">
+      <div className="w-full rounded-lg inpt bg-white">
         <input
           id="password"
           name="password"
           type="password"
           placeholder="Password"
-          className="w-full inpt"
+          className=""
         />
       </div>
       {state?.errors?.password && (
         <p className="text-red-500">{state.errors.password}</p>
       )}
 
-      {state?.errors?.email && (
-        <p className="text-red-500">{state.errors.email}</p>
+      {state?.email && (
+        <p className="text-red-500">{state.email}</p>
       )}
 
        {state?.warning && (
-        <p className="text-red-500">{state.warning.toString()}</p>
+        <p className="text-red-500">{state.warning}</p>
       )}
       <SubmitButton/>
     </form>
@@ -61,7 +66,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button disabled={pending} type="submit" className='rounded-lg border border-black bg-black py-2.5 font-medium text-white transition-colors hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50'>
+    <button disabled={pending} type="submit" className='rounded-lg border border-black bg-black py-2.5 font-medium text-white transition-colors hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50 w-full'>
       Login
     </button>
   );

@@ -30,8 +30,7 @@ export async function sendEmail(data: ContactFormInputs) {
   if (result.success) {
     const { name, email, message } = result.data
 
-    // TODO: put the email to database of your choice e.g neonDb, local mongoDb, AtlasMongoDb etc
-
+    
     try {
       const data = await resend.emails.send({
         from: 'Acme <onboarding@resend.dev>',
@@ -40,6 +39,8 @@ export async function sendEmail(data: ContactFormInputs) {
         text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
         react: await ContactFormEmail({ name, email, message })
       })
+      
+      // TODO: put the email to database of your choice e.g neonDb, local mongoDb, AtlasMongoDb etc
 
       const dataEmail = await prisma.waitlistEntry.findFirst({
         where: {
@@ -56,12 +57,6 @@ export async function sendEmail(data: ContactFormInputs) {
           },
         })
       }
-
-      // await prisma.waitlistEntry.create({
-      //   data: {
-      //     email: email,
-      //   },
-      // })
 
 
       return { success: true, data }

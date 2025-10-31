@@ -46,12 +46,14 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit(processForm)}
-      className='mx-auto flex flex-1 flex-col gap-4 text-gray-600 sm:w-1/2 lg:w-1/3'
+      className='mx-auto flex flex-1 flex-col items-center justify-center gap-4 text-gray-600 sm:w-1/2 lg:w-1/3'
     >
-      <div>
+      <h1 className='mb-16 text-2xl text-black font-extrabold flex items-center justify-center'>WaitList</h1>
+
+      <div className='w-full rounded-lg inpt bg-white'>
         <input
           placeholder='name'
-          className='w-full rounded-lg inpt bg-white'
+          className=''
           {...register('name')}
         />
         {errors.name?.message && (
@@ -61,10 +63,10 @@ export default function ContactForm() {
         )}
       </div>
 
-      <div>
+      <div className='w-full rounded-lg inpt bg-white'>
         <input
           placeholder='email'
-          className='w-full rounded-lg inpt'
+          className=''
           {...register('email')}
         />
         {errors.email?.message && (
@@ -74,13 +76,13 @@ export default function ContactForm() {
         )}
       </div>
 
-      <div>
+      <div className='w-full rounded-lg inpt bg-white'>
         <textarea
           rows={5}
           cols={5}
           resize-none='true'
           placeholder='message'
-          className='w-full rounded-lg inpt'
+          className=''
           {...register('message')}
         />
         {errors.message?.message && (
@@ -90,7 +92,7 @@ export default function ContactForm() {
 
       <button
         disabled={isSubmitting}
-        className='but2'
+        className='rounded-lg border border-black bg-black py-2.5 font-medium text-white transition-colors hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50 w-full'
       >
         {isSubmitting ? 'Submitting...' : 'Submit'}
       </button>
