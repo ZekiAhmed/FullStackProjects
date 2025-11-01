@@ -3,7 +3,7 @@ import Image from '../../components/image/image'
 import './authPage.css'
 import { useNavigate } from 'react-router';
 import apiRequest from '../../utils/apiRequest';
-import useAuthStore from '../../store/authStore';
+import useAuthStore from '../../utils/authStore';
 
 function AuthPage() {
     const [isRegister, setIsRegister] = useState(false);

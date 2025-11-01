@@ -3,7 +3,7 @@ import './userButton.css'
 import Image from '../image/image';
 import apiRequest from '../../utils/apiRequest';
 import { Link, useNavigate } from 'react-router';
-import useAuthStore from '../../store/authStore';
+import useAuthStore from '../../utils/authStore';
 
 function UserButton() {
     const [open, setOpen] = useState(false);
@@ -26,12 +26,12 @@ function UserButton() {
 
   return currentUser ? (
     <div className='userButton'>
-        <Image path="/general/noAvatar.png" alt="" />
+        <Image path={currentUser.img || "/general/noAvatar.png"} alt="" />
         <div onClick={() => setOpen((prev) => !prev)}>
           <Image path="/general/arrow.svg" alt="" className='arrow' />
         </div>
         {open && <div className="userOptions">
-            <div className="userOption">Profile</div>
+            <Link to={`/profile/${currentUser.username}`} className="userOption">Profile</Link>
             <div className="userOption">Setting</div>
             <div className='userOption' onClick={handleLogout}>Logout</div>
         </div>}
