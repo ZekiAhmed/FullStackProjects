@@ -32,7 +32,7 @@ function Comments({id}) {
                 ))}
             {/* END COMMENT  */}
             </div>
-                <CommentForm />
+                <CommentForm id={id}/>
         </div>
     )
 }
