@@ -1,23 +1,79 @@
-import Image from '../../components/image/image'
+import IKImage from '../../components/image/image'
 import './createPage.css'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import  useAuthStore  from '../../utils/authStore.js'
+import Editor from '../../components/editor/editor.jsx'
 
 function CreatePage() {
+    const { currentUser } = useAuthStore();
+    const navigate = useNavigate();
+
+    const [file, setFile] = useState(null);
+    const [previewImg, setPreviewImg] = useState({
+        url: "",
+        width: 0,
+        height: 0,
+    });
+    const [isEditing, setIsEditing] = useState(false);
+
+
+    useEffect(() => {
+        if (!currentUser) {
+        navigate("/auth");
+        }
+    }, [navigate, currentUser]);
+
+    useEffect(() => {
+        if (file) {
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = () => {
+            setPreviewImg({
+            url: URL.createObjectURL(file),
+            width: img.width,
+            height: img.height,
+            });
+        };
+        }
+    }, [file]);
+
     return (
         <div className="createPage">
             <div className="createTop">
-                <h1>Create Pin</h1>
-                <button>Publish</button>
+                <h1>{isEditing ? "Design your Pin" : "Create Pin"}</h1>
+                <button>{isEditing ? "Done" : "Publish"}</button>
             </div>
-            <div className="createBottom">
-                <div className="upload">
-                    <div className="uploadTitle">
-                        <Image path='/general/upload.svg' />
-                    </div>
-                    <div className="uploadInfo">
-                        We recommend using high quality .jpg files less than 20 MB or
-                         .mp4 files less than 200 MB.
+            {isEditing ? (
+                <Editor previewImg={previewImg}/>
+                ) : (
+                <div className="createBottom">
+               {previewImg.url ? (
+                <div className='preview'>
+                    <img src={previewImg.url} alt="" />
+                    <div className="editIcon" onClick={() => setIsEditing(true)}>
+                        <IKImage path="/general/edit.svg" alt="" />
                     </div>
                 </div>
+                ) : (
+                    <>
+                        <label htmlFor="file" className="upload">
+                            <div className="uploadTitle">
+                                <IKImage path='/general/upload.svg' />
+                            </div>
+                            <div className="uploadInfo">
+                                We recommend using high quality .jpg files less than 20 MB or
+                                .mp4 files less than 200 MB.
+                            </div>
+                        </label>
+                        <input
+                            type="file"
+                            id="file"
+                            hidden
+                            onChange={(e) => setFile(e.target.files[0])}
+                        />
+                    </>
+              )}
                 <form className='createForm'>
                     <div className="createFormItem">
                         <label htmlFor="title">Title</label>
@@ -62,7 +118,7 @@ function CreatePage() {
                         <small>Don&apos;t worry, people won&apos;t see your tags</small>
                     </div>
                 </form>
-            </div>
+            </div>)}
         </div>
     )
 }
