@@ -86,9 +86,11 @@
   position: relative;
 }
 
-.preview img{
-  border-radius: 32px;
-  width: 100%;
+.profileImgPreview img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .editIconProfile{

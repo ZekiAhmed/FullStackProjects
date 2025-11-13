@@ -7,6 +7,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiRequest from '../../utils/apiRequest';
 import { useParams } from 'react-router';
 import FollowButton from './FollowButton';
+import useAuthStore from '../../utils/authStore';
+
+
+// const addProfileImage = async (formData) => {
+//   const res = await apiRequest.post(`/users/${username}`, formData);
+//   return res.data;
+// };
 
 function ProfilePage() {
     const [type, setType] = useState("saved");
@@ -17,6 +24,7 @@ function ProfilePage() {
         width: 0,
         height: 0,
     });
+    const { updateCurrentUser } = useAuthStore();
 
     const queryClient = useQueryClient();
 
@@ -50,9 +58,11 @@ function ProfilePage() {
 
     // Mutation to upload profile image. Use FormData and post to server endpoint `/users/:username`.
     const mutation = useMutation({
-        mutationFn: (formData) => apiRequest.post(`/users/${username}`, formData),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["profile", username] });
+        mutationFn: (formData) => apiRequest.post(`/users/${username}`, formData).then(res => res.data),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["profile"] });
+            console.log('Updating current user with data:', data);
+            updateCurrentUser(data);
         },
         onError: (err) => {
             console.error('Profile image upload failed', err);
@@ -67,6 +77,11 @@ function ProfilePage() {
         queryKey: ["profile", username],
         queryFn: () => apiRequest.get(`/users/${username}`).then((res) => res.data),
     });
+
+    // if (data ) {
+    //     // If viewing own profile, update currentUser in auth store with latest data
+    //     updateCurrentUser(data);
+    // }
 
     if (isPending) return "Loading...";
 
@@ -91,6 +106,7 @@ function ProfilePage() {
             // Use mutateAsync so we can await the response and log it if needed
             const res = await mutation.mutateAsync(formData);
             console.log("File uploaded:", res?.data);
+
         } catch (err) {
             console.error("Upload failed:", err);
             // onSettled will clear uploading flag
@@ -102,17 +118,23 @@ function ProfilePage() {
         <div className="profilePage">
             <>
                 <div className="profileImgLabel">
-                    <IKmage 
-                    className={`profileImg ${uploading ? "opacity-50" : ""}`}
-                    w={100}
-                    h={100} 
-                    // When previewImg.url (an object URL) exists, pass it as `src` so
-                    // the ImageKit component renders the local blob directly.
-                    // Otherwise pass the server `path` (data.img) or fallback avatar.
-                    {...(previewImg.url
-                        ? { src: previewImg.url }
-                        : { path: data.img || "/general/noAvatar.png" })}
-                    alt=""/>
+                    {previewImg.url ? (
+                        <div className="profileImgPreview">
+                            <img 
+                                src={ previewImg.url }
+                                alt="Preview"
+                            />
+                        </div>
+                    ) : (
+                        <div className="profileImg">
+                             <IKmage 
+                                w={100}
+                                h={100} 
+                                className="profileImg"
+                                path={ data.img || "/general/noAvatar.png" }
+                                alt=""/>
+                        </div>
+                    )}
                     <label htmlFor="file" >
                         <div className="editIconProfile">
                             <IKmage path="/general/edit.svg" alt="" />
