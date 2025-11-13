@@ -77,3 +77,31 @@
 .active {
   border-bottom: 3px solid black;
 }
+
+
+
+
+.profileImgLabel {
+  border-radius: 50%;
+  position: relative;
+}
+
+.preview img{
+  border-radius: 32px;
+  width: 100%;
+}
+
+.editIconProfile{
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background-color: #e50829;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+}

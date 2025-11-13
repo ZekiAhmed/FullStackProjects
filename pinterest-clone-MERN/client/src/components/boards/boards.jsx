@@ -25,7 +25,7 @@ function Boards({userId}) {
             {/* COLLECTION */}
             {data?.map((board) => (
                 <Link to={`/search?boardId=${board._id}`} className="collection" key={board._id}>
-                    <Image src={board.firstPin.media} alt="" />
+                    <Image path={board.firstPin.media} alt="" />
                     <div className="collectionInfo">
                         <h1>{board.title}</h1>
                         <span>{board.pinCount} Pins . {format(board.createdAt)}</span>

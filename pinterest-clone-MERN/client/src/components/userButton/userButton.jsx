@@ -12,7 +12,7 @@ function UserButton() {
 
     const { currentUser, removeCurrentUser } = useAuthStore();
 
-    console.log(currentUser);
+    console.log('current user',currentUser);
 
     const handleLogout = async () => {
       try {
@@ -26,12 +26,12 @@ function UserButton() {
 
   return currentUser ? (
     <div className='userButton'>
-        <Image path={currentUser.img || "/general/noAvatar.png"} alt="" />
+        <Image className='avatarImg' path={currentUser.img || "/general/noAvatar.png"} w={100} h={100} alt="" />
         <div onClick={() => setOpen((prev) => !prev)}>
           <Image path="/general/arrow.svg" alt="" className='arrow' />
         </div>
         {open && <div className="userOptions">
-            <Link to={`/profile/${currentUser.username}`} className="userOption">Profile</Link>
+            <Link to={`/${currentUser.username}`} className="userOption">Profile</Link>
             <div className="userOption">Setting</div>
             <div className='userOption' onClick={handleLogout}>Logout</div>
         </div>}

@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Follow from "../models/follow.model.js";
 import bcrypt from "bcryptjs";
+import Imagekit from "imagekit";
 import jwt from "jsonwebtoken";
 
 
@@ -138,3 +139,39 @@ export const followUser = async (req, res) => {
 
   res.status(200).json({ message: "Successful" });
 };
+
+
+export const addProfileImage = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (!req.files || !req.files.media) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const media = req.files.media;
+
+    const imagekit = new Imagekit({
+      publicKey: process.env.IK_PUBLIC_KEY,
+      privateKey: process.env.IK_PRIVATE_KEY,
+      urlEndpoint: process.env.IK_URL_ENDPOINT,
+    });
+
+    const response = await imagekit.upload({
+      file: media.data,
+      fileName: media.name,
+      folder: "profile_images",
+    });
+
+    // Use filePath returned by ImageKit (consistent with pin.controller)
+    user.img = response.filePath;
+    await user.save();
+
+    const { hashedPassword, ...detailsWithoutPassword } = user.toObject();
+    return res.status(200).json(detailsWithoutPassword);
+  } catch (err) {
+    console.error("addProfileImage error:", err);
+    return res.status(500).json({ message: "Upload failed", error: err });
+  }
+}

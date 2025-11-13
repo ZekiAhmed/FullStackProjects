@@ -22,3 +22,11 @@ export const addComment = async (req, res) => {
 };
 
 // TODO: deleteComment 
+export const deleteComment = async (req, res) => {
+  const { id } = req.params;
+  console.log("Deleting comment with ID:", id);
+
+  const comments = await Comment.deleteOne({ _id: id });
+
+  res.status(200).json(comments);
+};

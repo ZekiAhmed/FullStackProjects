@@ -5,10 +5,17 @@
   position: relative;
 }
 
-.userButton img {
+/* .userButton img {
   width: 36px;
   height: 36px;
   border: 100%;
+  object-fit: cover;
+} */
+
+.avatarImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
