@@ -1,6 +1,6 @@
 import { IKImage } from "imagekitio-react";
 
-const Image = ({ path, src, alt, className, w, h }) => {
+const Image = ({ path, src, alt, className, w, h, loadProfile }) => {
   return (
     <IKImage
       urlEndpoint={import.meta.env.VITE_URL_IK_ENDPOINT}
@@ -13,7 +13,7 @@ const Image = ({ path, src, alt, className, w, h }) => {
         },
       ]}
       alt={alt}
-      loading="lazy"
+      loading={loadProfile || 'lazy'}
       className={className}
       lqip={{ active: true, quality: 20 }}
     />

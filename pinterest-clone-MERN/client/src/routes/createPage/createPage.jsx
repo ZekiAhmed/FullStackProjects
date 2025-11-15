@@ -188,6 +188,11 @@ const CreatePage = () => {
                       {board.title}
                     </option>
                   ))}
+                  {newBoard && (
+                    <option value={newBoard} key="newBoard">
+                      {newBoard}
+                    </option>
+                  )}
                 </select>
                 <div className="newBoard">
                   {newBoard && (

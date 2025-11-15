@@ -26,6 +26,7 @@ const ProfilePage = React.lazy(() =>
 );
 const SearchPage = React.lazy(() => import("./routes/searchPage/searchPage"));
 const AuthPage = React.lazy(() => import("./routes/authPage/authPage"));
+// const TestPage = React.lazy(() => import("./routes/testPage/testPage"));
 
 
 const queryClient = new QueryClient()
@@ -44,6 +45,7 @@ createRoot(document.getElementById('root')).render(
               <Route path="/search" element={<SearchPage />} />
             </Route>
             <Route path="/auth" element={<AuthPage />} />
+            {/* <Route path="/test" element={<TestPage />} /> */}
           </Routes>
       </BrowserRouter>
     </QueryClientProvider>

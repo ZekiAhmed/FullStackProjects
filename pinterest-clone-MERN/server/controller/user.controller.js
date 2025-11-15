@@ -175,3 +175,24 @@ export const addProfileImage = async (req, res) => {
     return res.status(500).json({ message: "Upload failed", error: err });
   }
 }
+
+
+
+
+
+// export const allUser = async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     console.log('users', users);
+//     res.status(200).json({
+//       success: true,
+//       users,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Something went wrong! Please try again",
+//     });
+//   }
+// }

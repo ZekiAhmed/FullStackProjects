@@ -10,7 +10,7 @@ function UserButton() {
 
     const navigate = useNavigate();
 
-    const { currentUser, removeCurrentUser } = useAuthStore();
+    const { currentUser, removeCurrentUser, profileImage } = useAuthStore();
 
     console.log('current user',currentUser);
 
@@ -26,7 +26,11 @@ function UserButton() {
 
   return currentUser ? (
     <div className='userButton'>
-        <Image className='avatarImg' path={currentUser.img || "/general/noAvatar.png"} w={100} h={100} alt="" />
+        {profileImage === 1 ? 
+        (<Image className='avatarImg' path={currentUser.img || "/general/noAvatar.png"} loadProfile="eager" w={100} h={100} alt="" />) :
+        (<img className='avatarImg' src={ currentUser.img} alt="" />)}
+
+        {/* <img className='avatarImg' src={ `${import.meta.env.VITE_URL_IK_ENDPOINT}/${currentUser.img}`} alt="" /> */}
         <div onClick={() => setOpen((prev) => !prev)}>
           <Image path="/general/arrow.svg" alt="" className='arrow' />
         </div>

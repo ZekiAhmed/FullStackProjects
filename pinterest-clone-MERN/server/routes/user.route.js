@@ -5,13 +5,15 @@ import {
   loginUser,
   logoutUser,
   followUser,
-  addProfileImage
+  addProfileImage,
+  // allUser,
  } from "../controller/user.controller.js";
  import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
 router.get("/:username", getUser)
+// router.get("/users", allUser);
 router.post("/auth/register", registerUser);
 router.post("/auth/login", loginUser);
 router.post("/auth/logout", logoutUser);

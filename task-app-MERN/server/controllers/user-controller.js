@@ -149,4 +149,5 @@ const logout = async (req, res) => {
   });
 };
 
+
 export { registerUser, loginUser, logout };
