@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/elements": "^0.23.83",
+    "@clerk/nextjs": "^6.35.2",
     "@prisma/client": "^6.19.0",
     "dotenv": "^17.2.3",
     "imagekit": "^6.0.0",
