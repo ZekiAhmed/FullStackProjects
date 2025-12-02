@@ -1,6 +1,7 @@
 import  prisma  from "@/prisma"
 import Post from "./Post"
 import { auth } from "@clerk/nextjs/server";
+import InfiniteFeed from "./InfiniteFeed";
 
 const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
   const { userId } = await auth();
@@ -25,7 +26,16 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
       };
 
   const posts = await prisma.post.findMany({
-    where: whereCondition
+    where: whereCondition,
+    // include: {
+    //   rePost: {
+    //     include: postIncludeQuery,
+    //   },
+    //   ...postIncludeQuery,
+    // },
+    take: 3,
+    skip: 0,
+    orderBy: { createdAt: "desc" },
   });
 
   // console.log(posts);
@@ -35,8 +45,10 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
       {posts.map((post) => (
         <div key={post.id} >
           <Post />
+          FROM SERVER
         </div>
       ))}
+       <InfiniteFeed />
     </div>
   )
 }

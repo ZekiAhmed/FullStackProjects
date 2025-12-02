@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from 'next'
 import { ClerkProvider } from "@clerk/nextjs";
+import QueryProvider from "@/providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: 'Lama Dev X Clone',
@@ -13,12 +14,14 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
     <html lang="en">
-      <body>
-        {children}
+       <body>
+        <ClerkProvider>
+          <QueryProvider>
+                {children}
+          </QueryProvider>
+        </ClerkProvider>
       </body>
     </html>
-    </ClerkProvider>
   );
 }

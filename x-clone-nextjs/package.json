@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/elements": "^0.23.83",
+    "@clerk/elements": "^0.23.86",
     "@clerk/nextjs": "^6.35.5",
     "@prisma/adapter-pg": "^7.0.1",
     "@prisma/client": "^7.0.1",
+    "@tanstack/react-query": "^5.90.11",
     "dotenv": "^17.2.3",
     "imagekit": "^6.0.0",
     "imagekitio-next": "^1.0.1",
@@ -20,6 +21,7 @@
     "pg": "^8.16.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {

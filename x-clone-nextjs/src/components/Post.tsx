@@ -14,7 +14,7 @@ interface FileDetailsResponse {
   customMetadata?: { sensitive: boolean };
 }
 
-const Post = async ({ type }: { type?: "status" | "comment" }) => {
+const Post =  ({ type }: { type?: "status" | "comment" }) => {
  
   // FETCH POST MEDIA
 
