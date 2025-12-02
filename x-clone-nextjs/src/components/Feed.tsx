@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma"
+import  prisma  from "@/prisma"
 import Post from "./Post"
 import { auth } from "@clerk/nextjs/server";
 
@@ -23,9 +23,12 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
           ],
         },
       };
+
   const posts = await prisma.post.findMany({
     where: whereCondition
   });
+
+  // console.log(posts);
   
   return (
     <div className=''>

@@ -1,6 +1,6 @@
 import Feed from "@/components/Feed";
 import Image from "@/components/Image";
-import { prisma } from "@/prisma";
+import  prisma  from "@/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -24,7 +24,7 @@ const UserPage = async ({
         <Link href="/">
           <Image path="icons/back.svg" alt="back" w={24} h={24} />
         </Link>
-        <h1 className="font-bold text-lg">Lama Dev</h1>
+        <h1 className="font-bold text-lg">{user.displayName}</h1>
       </div>
       {/* INFO */}
       <div className="">
@@ -57,10 +57,10 @@ const UserPage = async ({
         <div className="p-4 flex flex-col gap-2">
           {/* USERNAME & HANDLE */}
           <div className="">
-            <h1 className="text-2xl font-bold">Lama Dev</h1>
-            <span className="text-textGray text-sm">@lamaWebDev</span>
+            <h1 className="text-2xl font-bold">{user.displayName}</h1>
+            <span className="text-textGray text-sm">@{user.displayName}</span>
           </div>
-          <p>Lama Dev Youtube Channel</p>
+          <p>{user.displayName} Youtube Channel</p>
           {/* JOB & LOCATION & DATE */}
           <div className="flex gap-4 text-textGray text-[15px]">
             <div className="flex items-center gap-2">
