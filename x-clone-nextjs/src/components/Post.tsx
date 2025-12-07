@@ -98,7 +98,7 @@ const Post = ({ type, post }: { type?: "status" | "comment", post: PostWithDetai
             <PostInfo />
           </div>
           {/* TEXT & MEDIA */}
-          <Link href={`/lamaWebDev/status/123`}>
+          <Link href={`/${originalPost.user.username}/status/${originalPost.id}`}>
             <p className={`${type === "status" && "text-lg"}`}>
               {originalPost.desc}
             </p>
