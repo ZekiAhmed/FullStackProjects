@@ -47,8 +47,12 @@ const StatusPage = async ({
         </Link>
         <h1 className="font-bold text-lg">Post</h1>
       </div>
-      <Post type="status" post={post}/>
-      <Comments />
+      <Post type="status" post={post} />
+      <Comments
+        comments={post.comments}
+        postId={post.id}
+        username={post.user.username}
+      />
     </div>
   );
 };
