@@ -101,6 +101,7 @@ const SignUpPage = () => {
                 />
                 <Clerk.FieldError className="text-red-300 text-sm" />
               </Clerk.Field>
+              <div id="clerk-captcha"></div> 
               <SignUp.Captcha />
               <SignUp.Action
                 submit
