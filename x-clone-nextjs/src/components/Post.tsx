@@ -104,7 +104,23 @@ const Post = ({ type, post }: { type?: "status" | "comment", post: PostWithDetai
             </p>
           </Link>
           {originalPost.img && (
-            <Image path={originalPost.img} alt="" w={600} h={600} />
+            <div className="overflow-hidden">
+              <Image
+                path={originalPost.img}
+                alt=""
+                w={600}
+                h={originalPost.imgHeight || 600}
+                className={originalPost.isSensitive ? "blur-3xl" : ""}
+              />
+            </div>
+          )}
+          {originalPost.video && (
+            <div className="rounded-lg overflow-hidden">
+              <Video
+                path={originalPost.video}
+                className={originalPost.isSensitive ? "blur-3xl" : ""}
+              />
+            </div>
           )}
           {type === "status" && (
             <span className="text-textGray">8:41 PM · Dec 5, 2024</span>

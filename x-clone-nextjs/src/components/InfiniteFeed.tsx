@@ -30,20 +30,39 @@ const InfiniteFeed = ({ userProfileId }: { userProfileId?: string }) => {
 
   const allPosts = data?.pages?.flatMap((page) => page.posts) || [];
 
+  // FIX: Make keys unique
+  const uniquePosts = Array.from(
+    new Map(allPosts.map((p) => [p.id, p])).values()
+  );
 
   return (
     <InfiniteScroll
-      dataLength={allPosts.length}
+      dataLength={uniquePosts.length}
       next={fetchNextPage}
       hasMore={!!hasNextPage}
       loader={<h1>Posts are loading...</h1>}
       endMessage={<h1>All posts loaded!</h1>}
     >
-      {allPosts.map((post) => (
-        <Post key={post.id} post={post}/>
+      {uniquePosts.map((post) => (
+        <Post key={post.id} post={post} />
       ))}
     </InfiniteScroll>
   );
+
+
+  // return (
+  //   <InfiniteScroll
+  //     dataLength={allPosts.length}
+  //     next={fetchNextPage}
+  //     hasMore={!!hasNextPage}
+  //     loader={<h1>Posts are loading...</h1>}
+  //     endMessage={<h1>All posts loaded!</h1>}
+  //   >
+  //     {allPosts.map((post) => (
+  //       <Post key={post.id} post={post}/>
+  //     ))}
+  //   </InfiniteScroll>
+  // );
 }
 
 export default InfiniteFeed

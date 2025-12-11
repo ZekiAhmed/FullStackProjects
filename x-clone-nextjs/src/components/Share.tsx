@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useActionState, useEffect, useRef, useState } from "react";
 import Image from "./Image";
 import NextImage from "next/image";
 import { shareAction } from "@/actions";
 import ImageEditor from "./ImageEditor";
+import { addPost } from "@/action";
+import { useUser } from "@clerk/nextjs";
 
 const Share = () => {
   const [media, setMedia] = useState<File | null>(null);
@@ -25,17 +27,50 @@ const Share = () => {
 
   const previewURL = media ? URL.createObjectURL(media) : null;
 
+  const { user } = useUser();
+
+  const [state, formAction, isPending] = useActionState(addPost, {
+    success: false,
+    error: false,
+  });
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    if (state.success) {
+      formRef.current?.reset();
+      setMedia(null);
+      setSettings({ type: "original", sensitive: false });
+    }
+  }, [state]);
+
   return (
     <form
+      ref={formRef}
       className="p-4 flex gap-4"
-      action={(formData) => shareAction(formData, settings)}
+      // action={(formData) => shareAction(formData, settings)}
+      action={formAction}
     >
       {/* AVATAR */}
       <div className="relative w-10 h-10 rounded-full overflow-hidden">
-        <Image path="general/avatar.png" alt="" w={100} h={100} tr={true} />
+        <Image src={user?.imageUrl} alt="" w={100} h={100} tr={true} />
       </div>
       {/* OTHERS */}
       <div className="flex-1 flex flex-col gap-4">
+        <input
+          type="text"
+          name="imgType"
+          value={settings.type}
+          hidden
+          readOnly
+        />
+        <input
+          type="text"
+          name="isSensitive"
+          value={settings.sensitive ? "true" : "false"}
+          hidden
+          readOnly
+        />
         <input
           type="text"
           name="desc"
@@ -50,13 +85,12 @@ const Share = () => {
               alt=""
               width={600}
               height={600}
-              className={`w-full ${
-                settings.type === "original"
-                  ? "h-full object-contain"
-                  : settings.type === "square"
+              className={`w-full ${settings.type === "original"
+                ? "h-full object-contain"
+                : settings.type === "square"
                   ? "aspect-square object-cover"
                   : "aspect-video object-cover"
-              }`}
+                }`}
             />
             <div
               className="absolute top-2 left-2 bg-black bg-opacity-50 text-white py-1 px-4 rounded-full font-bold text-sm cursor-pointer"
@@ -146,9 +180,15 @@ const Share = () => {
               className="cursor-pointer"
             />
           </div>
-          <button className="bg-white text-black font-bold rounded-full py-2 px-4">
-            Post
+          <button
+            className="bg-white text-black font-bold rounded-full py-2 px-4 disabled:cursor-not-allowed"
+            disabled={isPending}
+          >
+            {isPending ? "Posting" : "Post"}
           </button>
+          {state.error && (
+            <span className="text-red-300 p-4">Something went wrong!</span>
+          )}
         </div>
       </div>
     </form>
