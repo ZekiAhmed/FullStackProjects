@@ -2,8 +2,8 @@
 
 import { auth } from "@clerk/nextjs/server";
 import prisma from "./prisma";
-// import { z } from "zod";
-// import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { revalidatePath } from "next/cache";
 // import { UploadResponse } from "imagekit/dist/libs/interfaces";
 // import { imagekit } from "./utils";
 
@@ -98,47 +98,47 @@ export const savePost = async (postId: number) => {
   }
 };
 
-// export const addComment = async (
-//   prevState: { success: boolean; error: boolean },
-//   formData: FormData
-// ) => {
-//   const { userId } = await auth();
+export const addComment = async (
+  prevState: { success: boolean; error: boolean },
+  formData: FormData
+) => {
+  const { userId } = await auth();
 
-//   if (!userId) return { success: false, error: true };
+  if (!userId) return { success: false, error: true };
 
-//   const postId = formData.get("postId");
-//   const username = formData.get("username");
-//   const desc = formData.get("desc");
+  const postId = formData.get("postId");
+  const username = formData.get("username");
+  const desc = formData.get("desc");
 
-//   const Comment = z.object({
-//     parentPostId: z.number(),
-//     desc: z.string().max(140),
-//   });
+  const Comment = z.object({
+    parentPostId: z.number(),
+    desc: z.string().max(140),
+  });
 
-//   const validatedFields = Comment.safeParse({
-//     parentPostId: Number(postId),
-//     desc,
-//   });
+  const validatedFields = Comment.safeParse({
+    parentPostId: Number(postId),
+    desc,
+  });
 
-//   if (!validatedFields.success) {
-//     console.log(validatedFields.error.flatten().fieldErrors);
-//     return { success: false, error: true };
-//   }
+  if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten().fieldErrors);
+    return { success: false, error: true };
+  }
 
-//   try {
-//     await prisma.post.create({
-//       data: {
-//         ...validatedFields.data,
-//         userId,
-//       },
-//     });
-//     revalidatePath(`/${username}/status/${postId}`);
-//     return { success: true, error: false };
-//   } catch (err) {
-//     console.log(err);
-//     return { success: false, error: true };
-//   }
-// };
+  try {
+    await prisma.post.create({
+      data: {
+        ...validatedFields.data,
+        userId,
+      },
+    });
+    revalidatePath(`/${username}/status/${postId}`);
+    return { success: true, error: false };
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
 
 // export const addPost = async (
 //   prevState: { success: boolean; error: boolean },
