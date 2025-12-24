@@ -43,7 +43,17 @@ app.prepare().then(() => {
         });
 
         socket.on("sendNotification", ({ receiverUsername, data }) => {
+            if (!receiverUsername) {
+                console.log("No receiver username provided");
+                return;
+            }
+
             const receiver = getUser(receiverUsername);
+
+            if (!receiver) {
+                console.log("Receiver not online:", receiverUsername);
+                return;
+            }
 
             io.to(receiver.socketId).emit("getNotification", {
                 id: uuidv4(),

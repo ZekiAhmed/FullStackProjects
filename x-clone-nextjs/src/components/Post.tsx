@@ -8,28 +8,48 @@ import { Post as PostType } from "@/generated/prisma/client";
 import { format } from "timeago.js"
 
 
-type PostWithDetails = PostType & {
-  user: {
-    displayName: string | null;
-    username: string;
-    img: string | null;
-  };
-  rePost?: PostType & {
-    user: {
-      displayName: string | null;
-      username: string;
-      img: string | null;
-    }
-    _count: { likes: number; rePosts: number; comments: number };
-    likes: { id: number }[];
-    rePosts: { id: number }[];
-    saves: { id: number }[];
-  } | null;
+type UserSummary = {
+  displayName: string | null;
+  username: string;
+  img: string | null;
+};
+
+type Engagement = {
   _count: { likes: number; rePosts: number; comments: number };
   likes: { id: number }[];
   rePosts: { id: number }[];
   saves: { id: number }[];
-}
+};
+
+type PostWithDetails = PostType &
+  Engagement & {
+    user: UserSummary;
+    rePost?: (PostType & Engagement & { user: UserSummary }) | null;
+  };
+
+
+// type PostWithDetails = PostType & {
+//   user: {
+//     displayName: string | null;
+//     username: string;
+//     img: string | null;
+//   };
+//   rePost?: PostType & {
+//     user: {
+//       displayName: string | null;
+//       username: string;
+//       img: string | null;
+//     }
+//     _count: { likes: number; rePosts: number; comments: number };
+//     likes: { id: number }[];
+//     rePosts: { id: number }[];
+//     saves: { id: number }[];
+//   } | null;
+//   _count: { likes: number; rePosts: number; comments: number };
+//   likes: { id: number }[];
+//   rePosts: { id: number }[];
+//   saves: { id: number }[];
+// }
 
 
 
@@ -59,7 +79,7 @@ const Post = ({ type, post }: { type?: "status" | "comment", post: PostWithDetai
         {/* AVATAR */}
         <div
           className={`${type === "status" && "hidden"
-            } relative w-10 h-10 rounded-full overflow-hidden`}
+            } relative w-10 h-10 rounded-full overflow-hidden -z-10`}
         >
           <Image path={post.user.img || "general/noAvatar.png"} alt="" w={100} h={100} tr={true} />
         </div>
