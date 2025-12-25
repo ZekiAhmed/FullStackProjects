@@ -5,18 +5,26 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "./Post";
 
 const fetchPosts = async (pageParam: number, userProfileId?: string) => {
+  // const res = await fetch(
+  //   "http://localhost:3000/api/posts?cursor=" +
+  //   pageParam +
+  //   "&user=" +
+  //   userProfileId,
+  // );
+  // return res.json();
+
   const res = await fetch(
-    "http://localhost:3000/api/posts?cursor=" +
-    pageParam +
-    "&user=" +
-    userProfileId
+    `/api/posts?cursor=${pageParam ?? ""}&user=${userProfileId ?? ""}`,
+    { cache: "no-store" }
   );
+
+  if (!res.ok) throw new Error("Failed to fetch posts");
   return res.json();
 };
 
 const InfiniteFeed = ({ userProfileId }: { userProfileId?: string }) => {
   const { data, error, status, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["posts"],
+    queryKey: ["posts", userProfileId],
     queryFn: ({ pageParam = 2 }) => fetchPosts(pageParam, userProfileId),
     initialPageParam: 2,
     getNextPageParam: (lastPage, pages) =>
