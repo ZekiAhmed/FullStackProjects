@@ -14,7 +14,7 @@ const fetchPosts = async (pageParam: number, userProfileId?: string) => {
   // return res.json();
 
   const res = await fetch(
-    `/api/posts?cursor=${pageParam ?? ""}&user=${userProfileId ?? ""}`,
+    `https://x-clone-six-chi.vercel.app/api/posts?cursor=${pageParam ?? ""}&user=${userProfileId ?? ""}`,
     { cache: "no-store" }
   );
 
