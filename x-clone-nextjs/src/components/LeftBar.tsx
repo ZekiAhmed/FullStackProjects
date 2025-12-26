@@ -1,7 +1,10 @@
+"use client"
+
 import Link from "next/link";
 import Image from "./Image";
 import Socket from "./Socket";
 import Notification from "./Notification";
+import { useUser } from "@clerk/nextjs";
 
 const menuList = [
   {
@@ -66,7 +69,8 @@ const menuList = [
   },
 ];
 
-const LeftBar = () => {
+const LeftBar =  () => {
+  const {user} = useUser()
   return (
     <div className="h-screen sticky top-0 flex flex-col justify-between pt-2 pb-8">
       {/* LOGO MENU BUTTON */}
@@ -114,11 +118,11 @@ const LeftBar = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 relative rounded-full overflow-hidden">
-            <Image path="/general/avatar.png" alt="lama dev" w={100} h={100} tr={true} />
+            <Image src={user?.imageUrl} alt="lama dev" w={100} h={100} tr={true} />
           </div>
           <div className="hidden xxl:flex flex-col">
-            <span className="font-bold">Lama Dev</span>
-            <span className="text-sm text-textGray">@lamaWebDev</span>
+            <span className="font-bold">{user?.username}</span>
+            <span className="text-sm text-textGray">@{user?.username}</span>
           </div>
         </div>
         <div className="hidden xxl:block cursor-pointer font-bold">...</div>

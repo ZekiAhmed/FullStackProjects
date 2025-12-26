@@ -11,7 +11,7 @@ const PopularTags = () => {
       <div className="flex gap-4">
         <div className="relative w-20 h-20 rounded-xl overflow-hidden">
           <Image
-            path="general/cover.jpg"
+            path="general/post.jpeg"
             alt="event"
             w={120}
             h={120}

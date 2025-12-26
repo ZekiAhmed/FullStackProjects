@@ -28,7 +28,7 @@ const Share = () => {
   const previewURL = media ? URL.createObjectURL(media) : null;
 
   const { user } = useUser();
-
+  console.log("user image form share", user)
   const [state, formAction, isPending] = useActionState(addPost, {
     success: false,
     error: false,

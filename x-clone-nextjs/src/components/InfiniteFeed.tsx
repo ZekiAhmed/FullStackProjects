@@ -5,21 +5,21 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "./Post";
 
 const fetchPosts = async (pageParam: number, userProfileId?: string) => {
-  // const res = await fetch(
-  //   "http://localhost:3000/api/posts?cursor=" +
-  //   pageParam +
-  //   "&user=" +
-  //   userProfileId,
-  // );
-  // return res.json();
-
   const res = await fetch(
-    `https://x-clone-six-chi.vercel.app/api/posts?cursor=${pageParam ?? ""}&user=${userProfileId ?? ""}`,
-    { cache: "no-store" }
+    "http://localhost:3000/api/posts?cursor=" +
+    pageParam +
+    "&user=" +
+    userProfileId,
   );
-
-  if (!res.ok) throw new Error("Failed to fetch posts");
   return res.json();
+
+  // const res = await fetch(
+  //   `https://x-clone-six-chi.vercel.app/api/posts?cursor=${pageParam ?? ""}&user=${userProfileId ?? ""}`,
+  //   { cache: "no-store" }
+  // );
+
+  // if (!res.ok) throw new Error("Failed to fetch posts");
+  // return res.json();
 };
 
 const InfiniteFeed = ({ userProfileId }: { userProfileId?: string }) => {
