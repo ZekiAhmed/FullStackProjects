@@ -1,4 +1,4 @@
-import codingInFlowLogo from "@/assets/coding_in_flow_logo.jpg";
+import profileLogo from "@/assets/profile_logo.png";
 import { ModeToggle } from "@/components/mode-toggle";
 import { UserDropdown } from "@/components/user-dropdown";
 import { getServerSession } from "@/lib/get-session";
@@ -19,7 +19,7 @@ export async function Navbar() {
           className="flex items-center gap-2 font-semibold"
         >
           <Image
-            src={codingInFlowLogo}
+            src={profileLogo}
             alt="Coding in Flow logo"
             width={32}
             height={32}
